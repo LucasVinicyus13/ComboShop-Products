@@ -343,7 +343,8 @@ h1 {
 }
 
 .mobile-menu.active {
-  display: flex;
+    display: flex;
+    border-bottom: 3px #000 solid;
 }
 
 .mobile-menu ul {
