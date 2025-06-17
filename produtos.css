@@ -17,7 +17,7 @@ header {
   top: 0;
   left: 0;
   width: 100%;
-  height: 70px;
+  height: 50px;
   z-index: 1000;
   background-color: #9f8eff;
   border-bottom: 3px solid #000;
@@ -51,7 +51,7 @@ li a {
     display: flex;
     justify-content: center;
     padding: 0px 20px;
-    margin-top: 70px;
+    margin-top: 50px;
 }
 
 .main {
