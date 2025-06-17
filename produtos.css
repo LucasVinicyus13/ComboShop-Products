@@ -27,12 +27,14 @@ header {
 
 .logo {
     width: 40px;
+    order: 0;
 }
 
 ul {
     display: flex;
     list-style-type: none;
     gap: 20px;
+    order: 1; 
 }
 
 li a {
