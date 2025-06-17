@@ -269,9 +269,7 @@ h1 {
 
 .menu-toggle {
   display: none;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  position: relative;
   width: 30px;
   height: 24px;
   cursor: pointer;
@@ -279,18 +277,32 @@ h1 {
 }
 
 .menu-toggle span {
+  position: absolute;
+  left: 0;
   height: 3px;
   width: 100%;
   background-color: black;
   border-radius: 2px;
-  transition: all 0.3s ease-in-out;
-  position: relative;
+  transition: 0.3s ease-in-out;
 }
 
+/* Linhas do hambúrguer */
+.menu-toggle span:nth-child(1) {
+  top: 0;
+}
 
+.menu-toggle span:nth-child(2) {
+  top: 10px;
+}
+
+.menu-toggle span:nth-child(3) {
+  top: 20px;
+}
+
+/* Animação para virar X */
 .menu-toggle.open span:nth-child(1) {
   transform: rotate(45deg);
-  top: 0;
+  top: 10px;
 }
 
 .menu-toggle.open span:nth-child(2) {
@@ -299,9 +311,8 @@ h1 {
 
 .menu-toggle.open span:nth-child(3) {
   transform: rotate(-45deg);
-  top: 0;
+  top: 10px;
 }
-
 
 /* Menu mobile lateral esquerdo */
 .mobile-menu {
