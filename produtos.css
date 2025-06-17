@@ -250,23 +250,94 @@ h1 {
     }
 }
 
-/* Layout geral do header */
-.header-content {
+/* Container do topo */
+.header-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #9f8eff;
   padding: 10px 20px;
-  border-bottom: 3px solid #000;
-  position: relative;
-  z-index: 2;
+  background-color: #9f8eff;
 }
 
+/* Logo */
 .logo {
   width: 40px;
 }
 
-/* Estilo padrão menu desktop */
+/* Menu toggle (hambúrguer) */
+.menu-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 25px;
+  height: 20px;
+  cursor: pointer;
+}
+
+.menu-toggle span {
+  height: 3px;
+  width: 100%;
+  background-color: black;
+  border-radius: 2px;
+  transition: 0.3s;
+}
+
+.menu-toggle.open span:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+
+.menu-toggle.open span:nth-child(2) {
+  opacity: 0;
+}
+
+.menu-toggle.open span:nth-child(3) {
+  transform: rotate(-45deg) translate(5px, -5px);
+}
+
+/* Menu mobile lateral esquerdo */
+.mobile-menu {
+  position: fixed;
+  top: 0;
+  left: -250px;
+  width: 200px;
+  height: 100%;
+  background-color: #9f8eff;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 80px 20px 20px 20px;
+  transition: left 0.3s ease;
+  z-index: 999;
+}
+
+.mobile-menu.active {
+  left: 0;
+}
+
+.mobile-menu ul {
+  list-style: none;
+  padding: 0;
+}
+
+.mobile-menu li {
+  margin: 15px 0;
+  text-align: left;
+}
+
+.mobile-menu a {
+  text-decoration: none;
+  color: black;
+  font-size: 18px;
+  font-family: "Manjari", sans-serif;
+}
+
+/* Remover sombra */
+.mobile-menu,
+.desktop-menu {
+  box-shadow: none;
+}
+
+/* Menu desktop */
 .desktop-menu {
   display: flex;
   justify-content: center;
@@ -285,80 +356,6 @@ h1 {
   font-size: 18px;
   color: black;
   font-family: "Manjari", sans-serif;
-}
-
-/* Mobile menu escondido por padrão */
-.mobile-menu {
-  display: none;
-  flex-direction: column;
-  background-color: #9f8eff;
-  padding: 10px 20px;
-  animation: slideDown 0.3s ease forwards;
-}
-
-.mobile-menu ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.mobile-menu li {
-  margin: 10px 0;
-  text-align: left;
-}
-
-.mobile-menu a {
-  text-decoration: none;
-  font-size: 18px;
-  font-family: "Manjari", sans-serif;
-  color: black;
-}
-
-/* Ícone menu hamburguer */
-.menu-toggle {
-  display: none;
-  flex-direction: column;
-  justify-content: space-between;
-  width: 25px;
-  height: 20px;
-  cursor: pointer;
-}
-
-.menu-toggle span {
-  height: 3px;
-  width: 100%;
-  background-color: #000;
-  border-radius: 3px;
-  transition: all 0.3s ease;
-}
-
-.menu-toggle.open span:nth-child(1) {
-  transform: rotate(45deg) translate(5px, 5px);
-}
-
-.menu-toggle.open span:nth-child(2) {
-  opacity: 0;
-}
-
-.menu-toggle.open span:nth-child(3) {
-  transform: rotate(-45deg) translate(5px, -5px);
-}
-
-/* Ativar menu mobile */
-.mobile-menu.active {
-  display: flex;
-}
-
-/* Animação */
-@keyframes slideDown {
-  from {
-    transform: translateY(-10px);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
 }
 
 /* Responsividade */
