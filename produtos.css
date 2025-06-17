@@ -358,6 +358,7 @@ h1 {
     border-radius: 15px;
   text-align: left;
     transition: background-color 0.6s;
+    border-bottom: 3px #000 solid;
 }
 
 .mobile-menu li:hover {
