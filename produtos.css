@@ -250,66 +250,50 @@ h1 {
     }
 }
 
+/* Layout geral do header */
 .header-content {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 50px;
-  padding: 0 20px;
   background-color: #9f8eff;
+  padding: 10px 20px;
   border-bottom: 3px solid #000;
+  position: relative;
+  z-index: 2;
 }
 
 .logo {
   width: 40px;
-  margin-top: 5px;
+}
+
+/* Estilo padrão menu desktop */
+.desktop-menu {
+  display: flex;
+  justify-content: center;
+  background-color: #9f8eff;
+  padding: 10px 0;
 }
 
 .desktop-menu ul {
   display: flex;
-  gap: 25px;
+  gap: 30px;
   list-style: none;
 }
 
 .desktop-menu a {
   text-decoration: none;
-  color: black;
   font-size: 18px;
+  color: black;
   font-family: "Manjari", sans-serif;
 }
 
-/* Esconde no mobile */
-@media (max-width: 768px) {
-  .desktop-menu {
-    display: none;
-  }
-}
-
-/* Mostra o menu hamburguer só no mobile */
-.menu-toggle {
-  display: none;
-  flex-direction: column;
-  justify-content: space-between;
-  width: 25px;
-  height: 20px;
-  cursor: pointer;
-}
-
-.menu-toggle span {
-  height: 3px;
-  width: 100%;
-  background-color: #000;
-  border-radius: 3px;
-  transition: all 0.3s ease;
-}
-
-/* Mobile menu padrão */
+/* Mobile menu escondido por padrão */
 .mobile-menu {
   display: none;
   flex-direction: column;
   background-color: #9f8eff;
-  padding: 20px;
-  animation: fadeIn 0.3s ease forwards;
+  padding: 10px 20px;
+  animation: slideDown 0.3s ease forwards;
 }
 
 .mobile-menu ul {
@@ -330,26 +314,45 @@ h1 {
   color: black;
 }
 
-/* Animações hamburger */
+/* Ícone menu hamburguer */
+.menu-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 25px;
+  height: 20px;
+  cursor: pointer;
+}
+
+.menu-toggle span {
+  height: 3px;
+  width: 100%;
+  background-color: #000;
+  border-radius: 3px;
+  transition: all 0.3s ease;
+}
+
 .menu-toggle.open span:nth-child(1) {
   transform: rotate(45deg) translate(5px, 5px);
 }
+
 .menu-toggle.open span:nth-child(2) {
   opacity: 0;
 }
+
 .menu-toggle.open span:nth-child(3) {
-  transform: rotate(-45deg) translate(6px, -6px);
+  transform: rotate(-45deg) translate(5px, -5px);
 }
 
+/* Ativar menu mobile */
 .mobile-menu.active {
   display: flex;
-  animation: slideDown 0.3s ease forwards;
 }
 
-/* Animações */
+/* Animação */
 @keyframes slideDown {
   from {
-    transform: translateY(-15px);
+    transform: translateY(-10px);
     opacity: 0;
   }
   to {
@@ -358,8 +361,12 @@ h1 {
   }
 }
 
-/* Media query para mostrar hamburger */
+/* Responsividade */
 @media (max-width: 768px) {
+  .desktop-menu {
+    display: none;
+  }
+
   .menu-toggle {
     display: flex;
   }
