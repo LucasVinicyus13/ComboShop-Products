@@ -354,7 +354,8 @@ h1 {
 }
 
 .mobile-menu li {
-  margin: 15px 0;
+  padding: 15px 10px;
+    border-radius: 15px;
   text-align: left;
     transition: background-color 0.2s;
 }
