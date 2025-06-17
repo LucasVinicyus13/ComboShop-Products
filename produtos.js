@@ -100,3 +100,11 @@ menuToggle.addEventListener('click', () => {
   menuToggle.classList.toggle('open');
   mobileMenu.classList.toggle('active');
 });
+
+// Fecha o menu mobile ao clicar em um link
+document.querySelectorAll('.mobile-menu a').forEach(link => {
+  link.addEventListener('click', () => {
+    mobileMenu.classList.remove('active');
+    menuToggle.classList.remove('open');
+  });
+});
