@@ -357,7 +357,7 @@ h1 {
   padding: 15px 100vh;
   text-align: left;
     transition: background-color 0.6s;
-    border-bottom: 3px #000 solid;
+    border-bottom: 3px rgb(93, 1, 255) solid;
 }
 
 .mobile-menu li:hover {
