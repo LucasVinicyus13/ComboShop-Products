@@ -256,8 +256,36 @@ h1 {
   align-items: center;
   height: 50px;
   padding: 0 20px;
+  background-color: #9f8eff;
+  border-bottom: 3px solid #000;
 }
 
+.logo {
+  width: 40px;
+  margin-top: 5px;
+}
+
+.desktop-menu ul {
+  display: flex;
+  gap: 25px;
+  list-style: none;
+}
+
+.desktop-menu a {
+  text-decoration: none;
+  color: black;
+  font-size: 18px;
+  font-family: "Manjari", sans-serif;
+}
+
+/* Esconde no mobile */
+@media (max-width: 768px) {
+  .desktop-menu {
+    display: none;
+  }
+}
+
+/* Mostra o menu hamburguer só no mobile */
 .menu-toggle {
   display: none;
   flex-direction: column;
@@ -268,7 +296,6 @@ h1 {
 }
 
 .menu-toggle span {
-  display: block;
   height: 3px;
   width: 100%;
   background-color: #000;
@@ -276,33 +303,34 @@ h1 {
   transition: all 0.3s ease;
 }
 
+/* Mobile menu padrão */
 .mobile-menu {
   display: none;
   flex-direction: column;
   background-color: #9f8eff;
-  box-shadow: 2px 0px 25px #000;
-  padding: 20px 0;
+  padding: 20px;
+  animation: fadeIn 0.3s ease forwards;
 }
 
 .mobile-menu ul {
   list-style: none;
   padding: 0;
   margin: 0;
-  text-align: center;
 }
 
 .mobile-menu li {
-  margin: 15px 0;
+  margin: 10px 0;
+  text-align: left;
 }
 
 .mobile-menu a {
   text-decoration: none;
-  font-size: 20px;
+  font-size: 18px;
   font-family: "Manjari", sans-serif;
   color: black;
 }
 
-/* Hamburger animation */
+/* Animações hamburger */
 .menu-toggle.open span:nth-child(1) {
   transform: rotate(45deg) translate(5px, 5px);
 }
@@ -313,18 +341,26 @@ h1 {
   transform: rotate(-45deg) translate(6px, -6px);
 }
 
-/* Show mobile menu when active */
 .mobile-menu.active {
   display: flex;
+  animation: slideDown 0.3s ease forwards;
 }
 
-/* MEDIA QUERY */
+/* Animações */
+@keyframes slideDown {
+  from {
+    transform: translateY(-15px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Media query para mostrar hamburger */
 @media (max-width: 768px) {
   .menu-toggle {
     display: flex;
-  }
-
-  .mobile-menu {
-    display: none;
   }
 }
