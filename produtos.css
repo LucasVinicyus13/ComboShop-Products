@@ -267,38 +267,52 @@ h1 {
   width: 40px;
 }
 
-/* Menu mobile - drop-down do topo */
-.mobile-menu {
-  position: absolute;
-  top: 50px; /* logo abaixo do header */
-  left: 0;
-  width: 100%;
-  background-color: #9f8eff;
+.menu-toggle {
   display: none;
-  flex-direction: column;
-  align-items: center;
-  padding: 20px 0;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-  z-index: 999;
-  animation: slideDown 0.3s ease-out forwards;
+  position: relative;
+  width: 30px;
+  height: 24px;
+  cursor: pointer;
+  z-index: 1100;
 }
 
-/* Animação de descida */
-@keyframes slideDown {
-  from {
-    opacity: 0;
-    transform: translateY(-20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.menu-toggle span {
+  position: absolute;
+  left: 0;
+  height: 3px;
+  width: 100%;
+  background-color: black;
+  border-radius: 2px;
+  transition: 0.3s ease-in-out;
 }
 
-.mobile-menu.active {
-  display: flex;
+/* Linhas do hambúrguer */
+.menu-toggle span:nth-child(1) {
+  top: 0;
 }
 
+.menu-toggle span:nth-child(2) {
+  top: 10px;
+}
+
+.menu-toggle span:nth-child(3) {
+  top: 20px;
+}
+
+/* Animação para virar X */
+.menu-toggle.open span:nth-child(1) {
+  transform: rotate(45deg);
+  top: 10px;
+}
+
+.menu-toggle.open span:nth-child(2) {
+  opacity: 0;
+}
+
+.menu-toggle.open span:nth-child(3) {
+  transform: rotate(-45deg);
+  top: 10px;
+}
 
 /* Estilo para o campo de quantidade */
 .popup-content label,
