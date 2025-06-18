@@ -151,6 +151,13 @@ popup.addEventListener("click", e => {
     popup.querySelector(".popup-close").addEventListener("click", () => {
       popup.remove();
     });
+    document.addEventListener("keydown", e => {
+  if (e.key === "Escape") popup.remove();
+});
+popup.addEventListener("click", e => {
+  if (e.target === popup) popup.remove();
+});
+
 
     popup.querySelector(".btn-finalizar-pedido").addEventListener("click", () => {
       const cep = document.getElementById('cep').value.trim();
