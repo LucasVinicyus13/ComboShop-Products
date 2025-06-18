@@ -289,6 +289,28 @@ h1 {
   }
 }
 
+.hamburguer {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 30px;
+  height: 22px;
+  cursor: pointer;
+}
+
+.hamburguer span {
+  height: 4px;
+  width: 100%;
+  background: white;
+  border-radius: 2px;
+}
+
+@media (max-width: 768px) {
+  .hamburguer {
+    display: flex;
+  }
+}
+
 /* Estilo para o campo de quantidade */
 .popup-content label,
 .popup-content input,
