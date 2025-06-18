@@ -280,11 +280,10 @@ Obrigado pela compra!
   }
 });
 
-  document.addEventListener("DOMContentLoaded", () => {
-    const hamburguer = document.getElementById("hamburguer");
-    const menu = document.getElementById("menu");
+const menuToggle = document.getElementById('menu-toggle');
+const mobileMenu = document.getElementById('mobile-menu');
 
-    hamburguer.addEventListener("click", () => {
-      menu.classList.toggle("show");
-    });
-  });
+menuToggle.addEventListener('click', () => {
+  menuToggle.classList.toggle('open');
+  mobileMenu.classList.toggle('active');
+});
