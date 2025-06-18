@@ -106,7 +106,7 @@ document.addEventListener("DOMContentLoaded", () => {
         <p><strong>Total (Produto):</strong> R$ ${totalProduto}</p>
         <p><strong>Frete:</strong> R$ 10.99</p>
 
-        <button type="button" class="btn-endereco">Endereço de Entrega</button>
+        <button type="button" class="btn-endereco">Endereço de Entrega</button> <br> <br>
 
         <h3>Método de Pagamento:</h3>
         <select id="pagamento" required>
