@@ -215,25 +215,6 @@ Obrigado pela compra!
       numeroInput.value = numeroInput.value.replace(/\D/g, '');
     });
 
-    cepInput.addEventListener('blur', () => {
-      const cep = cepInput.value;
-      if (cep.length === 8) {
-        fetch(`https://viacep.com.br/ws/${cep}/json/`)
-          .then(res => res.json())
-          .then(data => {
-            if (!data.erro) {
-              popup.querySelector('#cidade').value = data.localidade;
-              popup.querySelector('#estado').value = data.uf;
-              popup.querySelector('#bairro').value = data.bairro;
-              popup.querySelector('#rua').value = data.logradouro;
-            } else {
-              alert('CEP não encontrado!');
-            }
-          })
-          .catch(() => alert('Erro ao buscar o CEP.'));
-      }
-    });
-
     popup.querySelector(".popup-close").addEventListener("click", () => popup.remove());
 
     popup.querySelector("#salvar-endereco").addEventListener("click", () => {
