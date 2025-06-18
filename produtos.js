@@ -99,90 +99,69 @@ popup.addEventListener("click", e => {
     });
   }
 
-  function abrirFormularioEndereco(produto, quantidade) {
-    const popup = document.createElement("div");
-    popup.className = "popup-overlay";
+function abrirFormularioEndereco(produto, quantidade) {
+  const popup = document.createElement("div");
+  popup.className = "popup-overlay";
 
-    popup.innerHTML = `
-      <div class="popup-content">
-        <span class="popup-close">&times;</span>
-        <h2>Finalizar Compra</h2>
-        <p><strong>Produto:</strong> ${produto.nome}</p>
-        <p><strong>Quantidade:</strong> ${quantidade}</p>
-        <p><strong>Total (Produto):</strong> R$ ${(produto.preco * quantidade).toFixed(2)}</p>
-        <p><strong>Frete:</strong> R$ 10.99</p>
+  const totalProduto = (produto.preco * quantidade).toFixed(2);
 
-        <h3>Endereço de Entrega:</h3>
-        <label>CEP:</label>
-        <input type="text" id="cep" placeholder="00000-000" required>
+  popup.innerHTML = `
+    <div class="popup-content">
+      <span class="popup-close">&times;</span>
+      <h2>Finalizar Compra</h2>
+      <p><strong>Produto:</strong> ${produto.nome}</p>
+      <p><strong>Quantidade:</strong> ${quantidade}</p>
+      <p><strong>Total (Produto):</strong> R$ ${totalProduto}</p>
+      <p><strong>Frete:</strong> R$ 10.99</p>
 
-        <label>Cidade:</label>
-        <input type="text" id="cidade" required>
+      <button type="button" class="btn-endereco">Endereço de Entrega</button>
 
-        <label>Estado (UF):</label>
-        <input type="text" id="estado" maxlength="2" required>
+      <h3>Método de Pagamento:</h3>
+      <select id="pagamento" required>
+        <option value="">Selecione</option>
+        <option value="Cartão de Crédito">Cartão de Crédito</option>
+        <option value="Pix">Pix</option>
+        <option value="Boleto">Boleto</option>
+      </select>
 
-        <label>Bairro:</label>
-        <input type="text" id="bairro" required>
+      <button type="button" class="btn-finalizar-pedido">Finalizar Pedido</button>
+    </div>
+  `;
 
-        <label>Rua:</label>
-        <input type="text" id="rua" required>
+  document.body.appendChild(popup);
 
-        <label>Número:</label>
-        <input type="text" id="numero" required>
+  const endereco = {
+    cep: '',
+    cidade: '',
+    estado: '',
+    bairro: '',
+    rua: '',
+    numero: '',
+    complemento: ''
+  };
 
-        <label>Complemento (opcional):</label>
-        <input type="text" id="complemento">
+  popup.querySelector(".popup-close").addEventListener("click", () => popup.remove());
 
-        <h3>Método de Pagamento:</h3>
-        <select id="pagamento" required>
-          <option value="">Selecione</option>
-          <option value="Cartão de Crédito">Cartão de Crédito</option>
-          <option value="Pix">Pix</option>
-          <option value="Boleto">Boleto</option>
-        </select>
+  popup.querySelector(".btn-endereco").addEventListener("click", () => {
+    abrirPopupEndereco(endereco);
+  });
 
-        <button type="button" class="btn-finalizar-pedido">Finalizar Pedido</button>
-      </div>
-    `;
+  popup.querySelector(".btn-finalizar-pedido").addEventListener("click", () => {
+    const pagamento = popup.querySelector('#pagamento').value;
 
-    document.body.appendChild(popup);
+    if (!pagamento) {
+      alert("Por favor, selecione o método de pagamento.");
+      return;
+    }
 
-    popup.querySelector(".popup-close").addEventListener("click", () => {
-      popup.remove();
-    });
-    document.addEventListener("keydown", e => {
-  if (e.key === "Escape") popup.remove();
-});
-popup.addEventListener("click", e => {
-  if (e.target === popup) popup.remove();
-});
+    if (!endereco.cep || !endereco.numero || !endereco.cidade || !endereco.estado || !endereco.bairro || !endereco.rua) {
+      alert("Por favor, preencha o endereço de entrega antes de finalizar.");
+      return;
+    }
 
+    const total = (produto.preco * quantidade + 10.99).toFixed(2);
 
-    popup.querySelector(".btn-finalizar-pedido").addEventListener("click", () => {
-      const cep = document.getElementById('cep').value.trim();
-      const cidade = document.getElementById('cidade').value.trim();
-      const estado = document.getElementById('estado').value.trim();
-      const bairro = document.getElementById('bairro').value.trim();
-      const rua = document.getElementById('rua').value.trim();
-      const numero = document.getElementById('numero').value.trim();
-      const pagamento = document.getElementById('pagamento').value;
-
-      const cepRegex = /^\d{5}-\d{3}$/;
-
-      if (!cepRegex.test(cep)) {
-        alert("Por favor, insira um CEP válido (ex: 12345-678).");
-        return;
-      }
-
-      if (!cidade || !estado || !bairro || !rua || !numero || !pagamento) {
-        alert("Por favor, preencha todos os campos obrigatórios.");
-        return;
-      }
-
-      const total = (produto.preco * quantidade + 10.99).toFixed(2);
-
-      alert(`
+    alert(`
 Pedido Finalizado!
 
 Produto: ${produto.nome}
@@ -190,20 +169,20 @@ Quantidade: ${quantidade}
 Total: R$ ${total}
 
 Endereço de Entrega:
-CEP: ${cep}
-Cidade: ${cidade}
-Estado: ${estado}
-Bairro: ${bairro}
-Rua: ${rua}, Nº ${numero}
+CEP: ${endereco.cep}
+Cidade: ${endereco.cidade}
+Estado: ${endereco.estado}
+Bairro: ${endereco.bairro}
+Rua: ${endereco.rua}, Nº ${endereco.numero}
+Complemento: ${endereco.complemento || "N/A"}
 
 Método de Pagamento: ${pagamento}
 
 Obrigado pela compra!
-      `);
-      popup.remove();
-    });
-  }
-});
+    `);
+    popup.remove();
+  });
+}
 
 // Script do menu mobile
 const menuToggle = document.getElementById('menu-toggle');
@@ -220,3 +199,98 @@ document.querySelectorAll('.mobile-menu a').forEach(link => {
     menuToggle.classList.remove('open');
   });
 });
+
+                          function abrirPopupEndereco(endereco) {
+  const popup = document.createElement("div");
+  popup.className = "popup-overlay";
+  popup.innerHTML = `
+    <div class="popup-content">
+      <span class="popup-close">&times;</span>
+      <h2>Endereço de Entrega</h2>
+
+      <label>CEP:</label>
+      <input type="text" id="cep" placeholder="00000000" maxlength="8" required>
+
+      <label>Cidade:</label>
+      <input type="text" id="cidade" required>
+
+      <label>Estado (UF):</label>
+      <input type="text" id="estado" maxlength="2" required>
+
+      <label>Bairro:</label>
+      <input type="text" id="bairro" required>
+
+      <label>Rua:</label>
+      <input type="text" id="rua" required>
+
+      <label>Número:</label>
+      <input type="text" id="numero" required>
+
+      <label>Complemento (opcional):</label>
+      <input type="text" id="complemento">
+
+      <button type="button" id="salvar-endereco">Salvar Endereço</button>
+    </div>
+  `;
+  document.body.appendChild(popup);
+
+  const cepInput = popup.querySelector('#cep');
+  const numeroInput = popup.querySelector('#numero');
+
+  // Apenas números no CEP e Número
+  cepInput.addEventListener('input', () => {
+    cepInput.value = cepInput.value.replace(/\D/g, '');
+  });
+
+  numeroInput.addEventListener('input', () => {
+    numeroInput.value = numeroInput.value.replace(/\D/g, '');
+  });
+
+  // ViaCEP API para preencher o endereço
+  cepInput.addEventListener('blur', () => {
+    const cep = cepInput.value;
+    if (cep.length === 8) {
+      fetch(`https://viacep.com.br/ws/${cep}/json/`)
+        .then(res => res.json())
+        .then(data => {
+          if (!data.erro) {
+            popup.querySelector('#cidade').value = data.localidade;
+            popup.querySelector('#estado').value = data.uf;
+            popup.querySelector('#bairro').value = data.bairro;
+            popup.querySelector('#rua').value = data.logradouro;
+          } else {
+            alert('CEP não encontrado!');
+          }
+        })
+        .catch(() => alert('Erro ao buscar o CEP.'));
+    }
+  });
+
+  popup.querySelector(".popup-close").addEventListener("click", () => popup.remove());
+
+  popup.querySelector("#salvar-endereco").addEventListener("click", () => {
+    const cep = cepInput.value;
+    const cidade = popup.querySelector('#cidade').value.trim();
+    const estado = popup.querySelector('#estado').value.trim();
+    const bairro = popup.querySelector('#bairro').value.trim();
+    const rua = popup.querySelector('#rua').value.trim();
+    const numero = numeroInput.value.trim();
+    const complemento = popup.querySelector('#complemento').value.trim();
+
+    if (!cep || !cidade || !estado || !bairro || !rua || !numero) {
+      alert("Por favor, preencha todos os campos obrigatórios.");
+      return;
+    }
+
+    endereco.cep = cep;
+    endereco.cidade = cidade;
+    endereco.estado = estado;
+    endereco.bairro = bairro;
+    endereco.rua = rua;
+    endereco.numero = numero;
+    endereco.complemento = complemento;
+
+    alert("Endereço salvo com sucesso!");
+    popup.remove();
+  });
+}
