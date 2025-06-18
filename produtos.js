@@ -69,7 +69,7 @@ document.addEventListener("DOMContentLoaded", () => {
         <p><strong>Mais detalhes:</strong> ${produto.detalhes}</p>
         <label for="quantidade">Quantidade:</label>
         <input type="number" id="quantidade" min="1" value="1" required>
-        <span class="price">${formatarPreco(produto.preco)}</span>
+        <span class="price">R$ ${produto.preco.toFixed(2)}</span>
         <button type="button" class="btn-endereco">Comprar</button>
       </div>
     `;
@@ -79,12 +79,6 @@ document.addEventListener("DOMContentLoaded", () => {
     popup.querySelector(".popup-close").addEventListener("click", () => {
       popup.remove();
     });
-    document.addEventListener("keydown", (e) => {
-  if (e.key === "Escape") {
-    const popup = document.querySelector(".popup-overlay");
-    if (popup) popup.remove();
-  }
-});
 
     popup.querySelector(".btn-endereco").addEventListener("click", () => {
       const quantidade = parseInt(popup.querySelector("#quantidade").value);
@@ -132,18 +126,16 @@ document.addEventListener("DOMContentLoaded", () => {
       cep: '', cidade: '', estado: '', bairro: '', rua: '', numero: '', complemento: ''
     };
 
+    const enderecoSalvo = JSON.parse(localStorage.getItem("enderecoSalvo"));
+    if (enderecoSalvo) {
+      Object.assign(endereco, enderecoSalvo);
+    }
+
     popup.querySelector(".popup-close").addEventListener("click", () => popup.remove());
 
     popup.querySelector(".btn-endereco").addEventListener("click", () => {
       abrirPopupEndereco(endereco);
     });
-
-    document.addEventListener("keydown", (e) => {
-  if (e.key === "Escape") {
-    const popup = document.querySelector(".popup-overlay");
-    if (popup) popup.remove();
-  }
-});
 
     popup.querySelector(".btn-finalizar-pedido").addEventListener("click", () => {
       const pagamento = popup.querySelector('#pagamento').value;
@@ -220,6 +212,14 @@ Obrigado pela compra!
     const cepInput = popup.querySelector('#cep');
     const numeroInput = popup.querySelector('#numero');
 
+    if (endereco.cep) popup.querySelector('#cep').value = endereco.cep;
+    if (endereco.cidade) popup.querySelector('#cidade').value = endereco.cidade;
+    if (endereco.estado) popup.querySelector('#estado').value = endereco.estado;
+    if (endereco.bairro) popup.querySelector('#bairro').value = endereco.bairro;
+    if (endereco.rua) popup.querySelector('#rua').value = endereco.rua;
+    if (endereco.numero) popup.querySelector('#numero').value = endereco.numero;
+    if (endereco.complemento) popup.querySelector('#complemento').value = endereco.complemento;
+
     cepInput.addEventListener('input', () => {
       cepInput.value = cepInput.value.replace(/\D/g, '');
     });
@@ -227,12 +227,6 @@ Obrigado pela compra!
     numeroInput.addEventListener('input', () => {
       numeroInput.value = numeroInput.value.replace(/\D/g, '');
     });
-    document.addEventListener("keydown", (e) => {
-  if (e.key === "Escape") {
-    const popup = document.querySelector(".popup-overlay");
-    if (popup) popup.remove();
-  }
-});
 
     popup.querySelector(".popup-close").addEventListener("click", () => popup.remove());
 
@@ -258,16 +252,10 @@ Obrigado pela compra!
       endereco.numero = numero;
       endereco.complemento = complemento;
 
+      localStorage.setItem("enderecoSalvo", JSON.stringify(endereco));
+
       alert("Endereço salvo com sucesso!");
       popup.remove();
     });
   }
 });
-
-const formatarPreco = (valor) => {
-  return new Intl.NumberFormat('pt-BR', {
-    style: 'currency',
-    currency: 'BRL'
-  }).format(valor);
-};
-
