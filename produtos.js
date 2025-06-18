@@ -70,7 +70,7 @@ document.addEventListener("DOMContentLoaded", () => {
         <label for="quantidade">Quantidade:</label>
         <input type="number" id="quantidade" min="1" value="1" required>
         <span class="price">R$ ${produto.preco.toFixed(2)}</span>
-        <button type="button" class="btn-endereco">Endereço de Entrega</button>
+        <button type="button" class="btn-endereco">Comprar</button>
       </div>
     `;
 
