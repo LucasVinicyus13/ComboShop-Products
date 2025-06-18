@@ -184,7 +184,7 @@ Obrigado pela compra!
         <h2>Endereço de Entrega</h2>
 
         <label>CEP:</label>
-        <input type="text" id="cep" placeholder="00000000" maxlength="8" required>
+        <input type="text" id="cep" placeholder="00000-000" maxlength="9" required>
 
         <label>Cidade:</label>
         <input type="text" id="cidade" required>
@@ -210,18 +210,36 @@ Obrigado pela compra!
     document.body.appendChild(popup);
 
     const cepInput = popup.querySelector('#cep');
+    const cidadeInput = popup.querySelector('#cidade');
+    const estadoInput = popup.querySelector('#estado');
     const numeroInput = popup.querySelector('#numero');
 
-    if (endereco.cep) popup.querySelector('#cep').value = endereco.cep;
-    if (endereco.cidade) popup.querySelector('#cidade').value = endereco.cidade;
-    if (endereco.estado) popup.querySelector('#estado').value = endereco.estado;
+    if (endereco.cep) cepInput.value = endereco.cep;
+    if (endereco.cidade) cidadeInput.value = endereco.cidade;
+    if (endereco.estado) estadoInput.value = endereco.estado;
     if (endereco.bairro) popup.querySelector('#bairro').value = endereco.bairro;
     if (endereco.rua) popup.querySelector('#rua').value = endereco.rua;
-    if (endereco.numero) popup.querySelector('#numero').value = endereco.numero;
+    if (endereco.numero) numeroInput.value = endereco.numero;
     if (endereco.complemento) popup.querySelector('#complemento').value = endereco.complemento;
 
     cepInput.addEventListener('input', () => {
-      cepInput.value = cepInput.value.replace(/\D/g, '');
+      let valor = cepInput.value.replace(/\D/g, '');
+      if (valor.length > 5) {
+        valor = valor.slice(0, 5) + '-' + valor.slice(5, 8);
+      }
+      cepInput.value = valor;
+    });
+
+    estadoInput.addEventListener('input', () => {
+      estadoInput.value = estadoInput.value.toUpperCase();
+    });
+
+    cidadeInput.addEventListener('blur', () => {
+      cidadeInput.value = cidadeInput.value
+        .toLowerCase()
+        .split(' ')
+        .map(palavra => palavra.charAt(0).toUpperCase() + palavra.slice(1))
+        .join(' ');
     });
 
     numeroInput.addEventListener('input', () => {
@@ -232,8 +250,8 @@ Obrigado pela compra!
 
     popup.querySelector("#salvar-endereco").addEventListener("click", () => {
       const cep = cepInput.value;
-      const cidade = popup.querySelector('#cidade').value.trim();
-      const estado = popup.querySelector('#estado').value.trim();
+      const cidade = cidadeInput.value.trim();
+      const estado = estadoInput.value.trim();
       const bairro = popup.querySelector('#bairro').value.trim();
       const rua = popup.querySelector('#rua').value.trim();
       const numero = numeroInput.value.trim();
