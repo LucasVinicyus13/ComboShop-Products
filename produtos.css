@@ -476,3 +476,29 @@ h1 {
 .btn-finalizar-pedido:hover {
   background-color: #6b21a8;
 }
+
+#pagamento {
+  width: 100%;
+  padding: 10px 12px;
+  margin-top: 8px;
+  margin-bottom: 16px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  color: #333;
+  appearance: none; /* Remove estilo padrão do sistema */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%204%205'%3E%3Cpath%20fill='%23333'%20d='M2%205L0%200h4L2%205z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 10px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+#pagamento:focus {
+  border-color: #666;
+  box-shadow: 0 0 0 2px rgba(100, 100, 100, 0.2);
+  outline: none;
+}
