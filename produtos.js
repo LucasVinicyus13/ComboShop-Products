@@ -1,67 +1,62 @@
 document.addEventListener("DOMContentLoaded", () => {
   const lista = document.getElementById("product-list");
 
-  // Lista de produtos
   const produtos = [
     {
       imagem: "./images/Produto1.jpeg",
       nome: "Bebê Reborn",
       descricao: "Uma criança que você não tera nenhum trabalho para cuidar.",
-      preco: "R$ 129,90",
+      preco: 129.90,
       detalhes: "O Bebê Reborn é feito com silicone e roupas costuradas à mão. Ideal para presentes ou colecionadores.",
     },
     {
       imagem: "./images/Produto2.jpg",
       nome: "Fraldas Pampers",
       descricao: "Fraldas para o seu Bebê Reborn sempre ficar limpinho.",
-      preco: "R$ 79,90",
+      preco: 79.90,
       detalhes: "Contém 138 unidades. Conforto seco garantido por até 12h.",
     },
     {
       imagem: "./images/Produto3.png",
       nome: "Sapatênis",
       descricao: "Sapatênis tamanho 38 para ficar muito no estilo.",
-      preco: "R$ 90,00",
+      preco: 90.00,
       detalhes: "Confeccionado em material sintético de alta qualidade, com palmilha macia e solado antiderrapante para máximo conforto e segurança.",
     },
     {
       imagem: "./images/Produto4.jpg",
       nome: "Boné do PT",
       descricao: "Compre este boné do PT para estar sempre apoiando nosso querido presidente.",
-      preco: "R$ 13,13",
+      preco: 13.13,
       detalhes: "Boné ajustável com estampa bordada em destaque, feito em algodão resistente para garantir estilo e durabilidade no apoio ao seu partido.",
     },
     {
       imagem: "./images/Produto5.jpeg",
       nome: "Tapete da MC Pipokinha",
       descricao: "Esse tapete impede de suas visitas chegarem na sua casa e falar mal da pipokinha.",
-      preco: "R$ 69,00",
+      preco: 69.00,
       detalhes: "Tapete em tecido antiderrapante, com estampa ousada e divertida da MC Pipokinha. Ideal para quem quer recepcionar as visitas com muito estilo (e um toque de polêmica).",
     }
   ];
 
-  // Criação dos cards de produto
   produtos.forEach(produto => {
     const card = document.createElement("div");
     card.className = "product-card";
-
     card.innerHTML = `
       <img src="${produto.imagem}" alt="${produto.nome}">
       <h2>${produto.nome}</h2>
       <p>${produto.descricao}</p>
-      <span class="price">${produto.preco}</span>
+      <span class="price">R$ ${produto.preco.toFixed(2)}</span>
       <button type="button" class="btn-comprar">Comprar</button>
     `;
 
-    const button = card.querySelector(".btn-comprar");
-    button.addEventListener("click", () => {
+    card.querySelector(".btn-comprar").addEventListener("click", () => {
       abrirPopup(produto);
     });
 
     lista.appendChild(card);
   });
 
-  // Função do primeiro pop-up (escolha de quantidade)
   function abrirPopup(produto) {
     const popup = document.createElement("div");
     popup.className = "popup-overlay";
@@ -72,86 +67,130 @@ document.addEventListener("DOMContentLoaded", () => {
         <h2>${produto.nome}</h2>
         <p>${produto.descricao}</p>
         <p><strong>Mais detalhes:</strong> ${produto.detalhes}</p>
-        <span class="price">${produto.preco}</span>
-
         <label for="quantidade">Quantidade:</label>
-        <input type="number" id="quantidade" min="1" value="1">
-
+        <input type="number" id="quantidade" min="1" value="1" required>
+        <span class="price">R$ ${produto.preco.toFixed(2)}</span>
         <button type="button" class="btn-popup-comprar">Comprar</button>
       </div>
     `;
 
     document.body.appendChild(popup);
 
-    // Fechar pop-up
     popup.querySelector(".popup-close").addEventListener("click", () => {
       popup.remove();
     });
 
-    // Evento do botão "Comprar" dentro do pop-up
     popup.querySelector(".btn-popup-comprar").addEventListener("click", () => {
-      const quantidade = parseInt(popup.querySelector("#quantidade").value) || 1;
+      const quantidade = parseInt(popup.querySelector("#quantidade").value);
+      if (quantidade <= 0 || isNaN(quantidade)) {
+        alert("Por favor, insira uma quantidade válida.");
+        return;
+      }
+      abrirFormularioEndereco(produto, quantidade);
       popup.remove();
-      abrirResumoFinal(produto, quantidade);
     });
   }
 
-  // Função do segundo pop-up (resumo final, método de pagamento, endereço e total)
-  function abrirResumoFinal(produto, quantidade) {
-    const precoUnitario = parseFloat(produto.preco.replace('R$', '').replace(',', '.'));
-    const frete = 10.99;
-    const total = (precoUnitario * quantidade) + frete;
+  function abrirFormularioEndereco(produto, quantidade) {
+    const popup = document.createElement("div");
+    popup.className = "popup-overlay";
 
-    const resumoPopup = document.createElement("div");
-    resumoPopup.className = "popup-overlay";
-    resumoPopup.innerHTML = `
+    popup.innerHTML = `
       <div class="popup-content">
         <span class="popup-close">&times;</span>
-        <h2>Resumo da Compra</h2>
+        <h2>Finalizar Compra</h2>
         <p><strong>Produto:</strong> ${produto.nome}</p>
         <p><strong>Quantidade:</strong> ${quantidade}</p>
-        <p><strong>Preço Unitário:</strong> ${produto.preco}</p>
-        <p><strong>Frete:</strong> R$ 10,99</p>
-        <p><strong>Total:</strong> R$ ${total.toFixed(2).replace('.', ',')}</p>
+        <p><strong>Total (Produto):</strong> R$ ${(produto.preco * quantidade).toFixed(2)}</p>
+        <p><strong>Frete:</strong> R$ 10.99</p>
 
-        <label for="endereco">Endereço de Entrega:</label>
-        <input type="text" id="endereco" placeholder="Digite seu endereço">
+        <h3>Endereço de Entrega:</h3>
+        <label>CEP:</label>
+        <input type="text" id="cep" placeholder="00000-000" required>
 
-        <label for="pagamento">Método de Pagamento:</label>
-        <select id="pagamento">
-          <option>Cartão de Crédito</option>
-          <option>Boleto</option>
-          <option>Pix</option>
+        <label>Cidade:</label>
+        <input type="text" id="cidade" required>
+
+        <label>Estado (UF):</label>
+        <input type="text" id="estado" maxlength="2" required>
+
+        <label>Bairro:</label>
+        <input type="text" id="bairro" required>
+
+        <label>Rua:</label>
+        <input type="text" id="rua" required>
+
+        <label>Número:</label>
+        <input type="text" id="numero" required>
+
+        <label>Complemento (opcional):</label>
+        <input type="text" id="complemento">
+
+        <h3>Método de Pagamento:</h3>
+        <select id="pagamento" required>
+          <option value="">Selecione</option>
+          <option value="Cartão de Crédito">Cartão de Crédito</option>
+          <option value="Pix">Pix</option>
+          <option value="Boleto">Boleto</option>
         </select>
 
-        <button type="button" class="btn-finalizar">Finalizar Pedido</button>
+        <button type="button" class="btn-finalizar-pedido">Finalizar Pedido</button>
       </div>
     `;
 
-    document.body.appendChild(resumoPopup);
+    document.body.appendChild(popup);
 
-    // Fechar pop-up
-    resumoPopup.querySelector(".popup-close").addEventListener("click", () => {
-      resumoPopup.remove();
+    popup.querySelector(".popup-close").addEventListener("click", () => {
+      popup.remove();
     });
 
-    // Evento do botão "Finalizar Pedido"
-    resumoPopup.querySelector(".btn-finalizar").addEventListener("click", () => {
-      const endereco = resumoPopup.querySelector("#endereco").value;
-      const pagamento = resumoPopup.querySelector("#pagamento").value;
+    popup.querySelector(".btn-finalizar-pedido").addEventListener("click", () => {
+      const cep = document.getElementById('cep').value.trim();
+      const cidade = document.getElementById('cidade').value.trim();
+      const estado = document.getElementById('estado').value.trim();
+      const bairro = document.getElementById('bairro').value.trim();
+      const rua = document.getElementById('rua').value.trim();
+      const numero = document.getElementById('numero').value.trim();
+      const pagamento = document.getElementById('pagamento').value;
 
-      if (endereco.trim() === "") {
-        alert("Por favor, preencha o endereço de entrega.");
+      const cepRegex = /^\d{5}-\d{3}$/;
+
+      if (!cepRegex.test(cep)) {
+        alert("Por favor, insira um CEP válido (ex: 12345-678).");
         return;
       }
 
-      alert(`Pedido finalizado!\n\nProduto: ${produto.nome}\nQuantidade: ${quantidade}\nTotal: R$ ${total.toFixed(2).replace('.', ',')}\nMétodo de pagamento: ${pagamento}\nEndereço: ${endereco}`);
-      resumoPopup.remove();
+      if (!cidade || !estado || !bairro || !rua || !numero || !pagamento) {
+        alert("Por favor, preencha todos os campos obrigatórios.");
+        return;
+      }
+
+      const total = (produto.preco * quantidade + 10.99).toFixed(2);
+
+      alert(`
+Pedido Finalizado!
+
+Produto: ${produto.nome}
+Quantidade: ${quantidade}
+Total: R$ ${total}
+
+Endereço de Entrega:
+CEP: ${cep}
+Cidade: ${cidade}
+Estado: ${estado}
+Bairro: ${bairro}
+Rua: ${rua}, Nº ${numero}
+
+Método de Pagamento: ${pagamento}
+
+Obrigado pela compra!
+      `);
+      popup.remove();
     });
   }
 });
 
-// Código do menu mobile
+// Script do menu mobile
 const menuToggle = document.getElementById('menu-toggle');
 const mobileMenu = document.getElementById('mobile-menu');
 
@@ -160,7 +199,6 @@ menuToggle.addEventListener('click', () => {
   mobileMenu.classList.toggle('active');
 });
 
-// Fecha o menu mobile ao clicar em um link
 document.querySelectorAll('.mobile-menu a').forEach(link => {
   link.addEventListener('click', () => {
     mobileMenu.classList.remove('active');
