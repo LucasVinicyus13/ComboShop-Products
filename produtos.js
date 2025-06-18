@@ -61,37 +61,93 @@ document.addEventListener("DOMContentLoaded", () => {
     lista.appendChild(card);
   });
 
-  // Função do pop-up
-  function abrirPopup(produto) {
-    const popup = document.createElement("div");
-    popup.className = "popup-overlay";
-    popup.innerHTML = `
-  <div class="popup-content">
-    <span class="popup-close">&times;</span>
-    <img src="${produto.imagem}" alt="${produto.nome}">
-    <h2>${produto.nome}</h2>
-    <p>${produto.descricao}</p>
-    <p><strong>Mais detalhes:</strong> ${produto.detalhes}</p>
-    <span class="price">${produto.preco}</span>
-    <button type="button" class="btn-popup-comprar">Comprar</button>
-  </div>
-`;
+function abrirPopup(produto) {
+  const popup = document.createElement("div");
+  popup.className = "popup-overlay";
+  popup.innerHTML = `
+    <div class="popup-content">
+      <span class="popup-close">&times;</span>
+      <img src="${produto.imagem}" alt="${produto.nome}">
+      <h2>${produto.nome}</h2>
+      <p>${produto.descricao}</p>
+      <p><strong>Mais detalhes:</strong> ${produto.detalhes}</p>
+      <span class="price">${produto.preco}</span>
 
+      <label for="quantidade">Quantidade:</label>
+      <input type="number" id="quantidade" min="1" value="1">
 
-    document.body.appendChild(popup);
+      <button type="button" class="btn-popup-comprar">Comprar</button>
+    </div>
+  `;
 
-    // Fechar pop-up
-    popup.querySelector(".popup-close").addEventListener("click", () => {
-      popup.remove();
-    });
+  document.body.appendChild(popup);
 
-    // Comprar dentro do pop-up
-    popup.querySelector(".btn-popup-comprar").addEventListener("click", () => {
-      alert(`Você comprou: ${produto.nome}`);
-      popup.remove();
-    });
-  }
-});
+  // Fechar pop-up
+  popup.querySelector(".popup-close").addEventListener("click", () => {
+    popup.remove();
+  });
+
+  // Evento do botão "Comprar" dentro do primeiro pop-up
+  popup.querySelector(".btn-popup-comprar").addEventListener("click", () => {
+    const quantidade = parseInt(popup.querySelector("#quantidade").value) || 1;
+    popup.remove();
+    abrirResumoFinal(produto, quantidade);
+  });
+}
+
+  function abrirResumoFinal(produto, quantidade) {
+  const precoUnitario = parseFloat(produto.preco.replace('R$', '').replace(',', '.'));
+  const frete = 10.99;
+  const total = (precoUnitario * quantidade) + frete;
+
+  const resumoPopup = document.createElement("div");
+  resumoPopup.className = "popup-overlay";
+  resumoPopup.innerHTML = `
+    <div class="popup-content">
+      <span class="popup-close">&times;</span>
+      <h2>Resumo da Compra</h2>
+      <p><strong>Produto:</strong> ${produto.nome}</p>
+      <p><strong>Quantidade:</strong> ${quantidade}</p>
+      <p><strong>Preço Unitário:</strong> ${produto.preco}</p>
+      <p><strong>Frete:</strong> R$ 10,99</p>
+      <p><strong>Total:</strong> R$ ${total.toFixed(2).replace('.', ',')}</p>
+
+      <label for="endereco">Endereço de Entrega:</label>
+      <input type="text" id="endereco" placeholder="Digite seu endereço">
+
+      <label for="pagamento">Método de Pagamento:</label>
+      <select id="pagamento">
+        <option>Cartão de Crédito</option>
+        <option>Boleto</option>
+        <option>Pix</option>
+      </select>
+
+      <button type="button" class="btn-finalizar">Finalizar Pedido</button>
+    </div>
+  `;
+
+  document.body.appendChild(resumoPopup);
+
+  // Fechar pop-up
+  resumoPopup.querySelector(".popup-close").addEventListener("click", () => {
+    resumoPopup.remove();
+  });
+
+  // Evento do botão "Finalizar Pedido"
+  resumoPopup.querySelector(".btn-finalizar").addEventListener("click", () => {
+    const endereco = resumoPopup.querySelector("#endereco").value;
+    const pagamento = resumoPopup.querySelector("#pagamento").value;
+
+    if (endereco.trim() === "") {
+      alert("Por favor, preencha o endereço de entrega.");
+      return;
+    }
+
+    alert(`Pedido finalizado!\n\nProduto: ${produto.nome}\nQuantidade: ${quantidade}\nTotal: R$ ${total.toFixed(2).replace('.', ',')}\nMétodo de pagamento: ${pagamento}\nEndereço: ${endereco}`);
+    resumoPopup.remove();
+  });
+}
+
 
 // produtos.js
 const menuToggle = document.getElementById('menu-toggle');
