@@ -79,6 +79,12 @@ document.addEventListener("DOMContentLoaded", () => {
     popup.querySelector(".popup-close").addEventListener("click", () => {
       popup.remove();
     });
+    document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") {
+    const popup = document.querySelector(".popup-overlay");
+    if (popup) popup.remove();
+  }
+});
 
     popup.querySelector(".btn-endereco").addEventListener("click", () => {
       const quantidade = parseInt(popup.querySelector("#quantidade").value);
@@ -131,6 +137,13 @@ document.addEventListener("DOMContentLoaded", () => {
     popup.querySelector(".btn-endereco").addEventListener("click", () => {
       abrirPopupEndereco(endereco);
     });
+
+    document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") {
+    const popup = document.querySelector(".popup-overlay");
+    if (popup) popup.remove();
+  }
+});
 
     popup.querySelector(".btn-finalizar-pedido").addEventListener("click", () => {
       const pagamento = popup.querySelector('#pagamento').value;
@@ -214,6 +227,12 @@ Obrigado pela compra!
     numeroInput.addEventListener('input', () => {
       numeroInput.value = numeroInput.value.replace(/\D/g, '');
     });
+    document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") {
+    const popup = document.querySelector(".popup-overlay");
+    if (popup) popup.remove();
+  }
+});
 
     popup.querySelector(".popup-close").addEventListener("click", () => popup.remove());
 
