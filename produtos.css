@@ -1,133 +1,414 @@
-/* Reset básico */
+/* Reset */
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
+/* Base */
 body {
-  background-color: #414bd2;
-  font-family: Arial, sans-serif;
-  color: #333;
+    background-color: #414bd2;
+    font-family: "Manjari", sans-serif;
 }
 
-/* Header */
+/* FIXA O HEADER NO TOPO */
 header {
-  height: 50px;
-  background-color: #9f8eff;
-  border-bottom: 3px solid #000;
-  box-shadow: 2px 0px 25px #000;
-  position: relative;
-  z-index: 1000;
-}
-
-ul {
-  display: flex;
-  position: absolute;
-  margin-top: 10px;
-  list-style: none;
-  right: 20px;
-}
-
-ul li {
-  margin: 0 10px;
-}
-
-ul li a {
-  text-decoration: none;
-  color: #000;
-  font-weight: bold;
-}
-
-/* Área de produtos */
-#product-list {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  margin-top: 40px;
-}
-
-.product-card {
-  background-color: #b79aff;
-  border-radius: 10px;
-  box-shadow: 2px 2px 15px #000;
-  padding: 15px;
-  margin: 15px;
-  width: 200px;
-  text-align: center;
-  transition: transform 0.2s;
-}
-
-.product-card:hover {
-  transform: scale(1.05);
-}
-
-.product-card img {
-  width: 100%;
-  height: auto;
-  border-radius: 8px;
-}
-
-.product-card .price {
-  font-weight: bold;
-  display: block;
-  margin: 10px 0;
-}
-
-.product-card button {
-  background-color: #7c5fff;
-  color: white;
-  border: none;
-  padding: 8px 15px;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.product-card button:hover {
-  background-color: #5e40d6;
-}
-
-/* Pop-up geral */
-.popup-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.7);
+  height: 50px;
+  z-index: 1000;
+  background-color: #9f8eff;
+  border-bottom: 3px solid #000;
+  box-shadow: 2px 0px 25px #000;
   display: flex;
-  justify-content: center;
   align-items: center;
-  z-index: 2000;
+  justify-content: space-between;
+  padding: 0 20px;
+}
+
+.logo {
+    width: 40px;
+    order: 0;
+}
+
+ul {
+    display: flex;
+    list-style-type: none;
+    gap: 20px;
+    order: 1; 
+}
+
+li a {
+    color: #000;
+    text-decoration: none;
+    font-size: 18px;
+    font-family: "Manjari", sans-serif;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    padding: 0px 20px;
+    margin-top: 50px;
+}
+
+.main {
+    background-color: #9f8eff;
+    width: 100%;
+    max-width: 1500px;
+    padding-bottom: 20px;
+    box-shadow: 0px 4px 25px -4px #000;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    overflow-x: hidden;
+}
+
+h1 {
+    text-align: center;
+    padding: 20px 10px;
+    font-size: 35px;
+    color: #000;
+    font-family: "Manjari", sans-serif;
+}
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+
+/* Cards */
+.product-card {
+    background-color: #c5a6ff;
+    border-radius: 10px;
+    padding: 15px;
+    text-align: center;
+    box-shadow: 0px 4px 20px -5px #000;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 6px 25px -5px #000;
+}
+
+.product-card img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+}
+
+.product-card h2 {
+    font-size: 18px;
+    color: #000;
+    margin-top: 10px;
+}
+
+.product-card p {
+    font-size: 14px;
+    color: #000000bb;
+}
+
+.price {
+    display: block;
+    margin: 10px 0;
+    font-weight: bold;
+    color: #000;
+}
+
+.product-card button {
+    background-color: #6c63ff;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.product-card button:hover {
+    background-color: #5a52d4;
+}
+
+/* Botão de compra */
+.btn-comprar {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #8b5cf6;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.btn-comprar:hover {
+    background-color: #6b21a8;
+}
+
+/* Popup */
+.popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #00000088;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
 }
 
 .popup-content {
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 12px;
-  width: 300px;
-  max-width: 90%;
-  text-align: center;
-  position: relative;
-  box-shadow: 0 0 20px #000;
+    position: relative;
+    background-color: #c5a6ff;
+    padding: 30px;
+    border-radius: 15px;
+    max-width: 400px;
+    width: 90%;
+    box-shadow: 0px 6px 20px #000;
+    text-align: center;
+    color: #000;
 }
 
 .popup-content img {
-  max-width: 100%;
-  border-radius: 8px;
-  margin-bottom: 10px;
+    width: 100px;
+    border-radius: 10px;
+    margin-bottom: 10px;
 }
 
 .popup-close {
-  position: absolute;
-  top: 8px;
-  right: 12px;
-  font-size: 20px;
-  cursor: pointer;
-  color: #333;
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 24px;
+    color: #000;
+    cursor: pointer;
+    font-weight: bold;
 }
 
-/* Estilo para input de quantidade */
+.btn-popup-comprar {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #8b5cf6;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.btn-popup-comprar:hover {
+    background-color: #6b21a8;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        height: auto;
+        padding: 10px;
+        gap: 10px;
+    }
+
+    ul {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        margin: 0;
+    }
+
+    .main {
+        width: 100%;
+        border-radius: 0;
+    }
+
+    .product-grid {
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    }
+}
+
+@media (max-width: 480px) {
+    .popup-content {
+        padding: 20px;
+    }
+
+    .popup-content img {
+        width: 80px;
+    }
+
+    .btn-comprar,
+    .btn-popup-comprar {
+        font-size: 14px;
+        padding: 8px 16px;
+    }
+
+    li a {
+        font-size: 16px;
+    }
+}
+
+/* CENTRALIZA LOGO À ESQUERDA E BOTÃO À DIREITA */
+.header-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+/* Logo */
+.logo {
+  width: 40px;
+}
+
+.menu-toggle {
+  display: none;
+  position: relative;
+  width: 30px;
+  height: 24px;
+  cursor: pointer;
+  z-index: 1100;
+}
+
+.menu-toggle span {
+  position: absolute;
+  left: 0;
+  height: 3px;
+  width: 100%;
+  background-color: black;
+  border-radius: 2px;
+  transition: 0.3s ease-in-out;
+}
+
+/* Linhas do hambúrguer */
+.menu-toggle span:nth-child(1) {
+  top: 0;
+}
+
+.menu-toggle span:nth-child(2) {
+  top: 10px;
+}
+
+.menu-toggle span:nth-child(3) {
+  top: 20px;
+}
+
+/* Animação para virar X */
+.menu-toggle.open span:nth-child(1) {
+  transform: rotate(45deg);
+  top: 10px;
+}
+
+.menu-toggle.open span:nth-child(2) {
+  opacity: 0;
+}
+
+.menu-toggle.open span:nth-child(3) {
+  transform: rotate(-45deg);
+  top: 10px;
+}
+
+/* Menu mobile - drop-down do topo */
+.mobile-menu {
+  position: absolute;
+  top: 50px; /* logo abaixo do header */
+  left: 0;
+  width: 100%;
+  background-color: #9f8eff;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px 0;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  z-index: 999;
+  animation: slideDown 0.3s ease-out forwards;
+}
+
+/* Animação de descida */
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.mobile-menu.active {
+    display: flex;
+    border-bottom: 3px #000 solid;
+    border-top: 3px #000 solid;
+}
+
+.mobile-menu ul {
+    list-style: none;
+    padding: 0;
+}
+
+.mobile-menu li {
+  padding: 15px 90vh;
+  text-align: left;
+  transition: background-color 0.6s;
+}
+
+.mobile-menu li:hover {
+    background-color: rgba(93, 1, 255, 0.2);
+}
+
+.mobile-menu a {
+  text-decoration: none;
+  color: black;
+  font-size: 18px;
+  font-family: "Manjari", sans-serif;
+}
+
+/* Remover sombra */
+.mobile-menu,
+.desktop-menu {
+  box-shadow: none;
+}
+
+/* Menu desktop */
+.desktop-menu {
+  display: flex;
+  justify-content: center;
+  background-color: #9f8eff;
+  padding: 10px 0;
+}
+
+.desktop-menu ul {
+  display: flex;
+  gap: 30px;
+  list-style: none;
+}
+
+.desktop-menu a {
+  text-decoration: none;
+  font-size: 18px;
+  color: black;
+  font-family: "Manjari", sans-serif;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .desktop-menu {
+    display: none;
+  }
+
+  .menu-toggle {
+    display: flex;
+  }
+}
+
+/* Estilo para o campo de quantidade */
 .popup-content label,
 .popup-content input,
 .popup-content select {
@@ -146,7 +427,7 @@ ul li a {
   margin-top: 5px;
 }
 
-/* Botões dos popups */
+/* Botões dentro do pop-up (para os botões novos também) */
 .popup-content button {
   background-color: #7c5fff;
   color: white;
@@ -159,61 +440,4 @@ ul li a {
 
 .popup-content button:hover {
   background-color: #5e40d6;
-}
-
-/* Responsividade */
-@media (max-width: 600px) {
-  .product-card {
-    width: 90%;
-  }
-
-  ul {
-    flex-direction: column;
-    right: 10px;
-  }
-
-  ul li {
-    margin: 5px 0;
-  }
-}
-
-/* Menu Mobile */
-#menu-toggle {
-  display: none;
-}
-
-@media (max-width: 768px) {
-  #menu-toggle {
-    display: block;
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    cursor: pointer;
-  }
-
-  .mobile-menu {
-    display: none;
-    flex-direction: column;
-    background-color: #9f8eff;
-    position: absolute;
-    top: 50px;
-    right: 0;
-    width: 150px;
-    border: 1px solid #000;
-    padding: 10px;
-  }
-
-  .mobile-menu.active {
-    display: flex;
-  }
-
-  .mobile-menu a {
-    margin: 5px 0;
-    text-decoration: none;
-    color: #000;
-  }
-
-  .mobile-menu a:hover {
-    text-decoration: underline;
-  }
 }
