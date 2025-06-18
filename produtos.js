@@ -74,6 +74,14 @@ document.addEventListener("DOMContentLoaded", () => {
       </div>
     `;
 
+document.addEventListener("keydown", e => {
+  if (e.key === "Escape") popup.remove();
+});
+popup.addEventListener("click", e => {
+  if (e.target === popup) popup.remove();
+});
+
+    
     document.body.appendChild(popup);
 
     popup.querySelector(".popup-close").addEventListener("click", () => {
