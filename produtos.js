@@ -1,4 +1,3 @@
-// CÓDIGO COMPLETO COM TODAS AS MELHORIAS, INCLUINDO A ATUALIZAÇÃO DINÂMICA DO PREÇO TOTAL
 document.addEventListener("DOMContentLoaded", () => {
   const lista = document.getElementById("product-list");
 
@@ -8,35 +7,35 @@ document.addEventListener("DOMContentLoaded", () => {
       nome: "Bebê Reborn",
       descricao: "Uma criança que você não tera nenhum trabalho para cuidar.",
       preco: 129.90,
-      detalhes: "O Bebê Reborn é feito com silicone e roupas costuradas à mão. Ideal para presentes ou colecionadores.",
+      detalhes: "O Bebê Reborn é feito com silicone e roupas costuradas à mão. Ideal para presentes ou colecionadores."
     },
     {
       imagem: "./images/Produto2.jpg",
       nome: "Fraldas Pampers",
       descricao: "Fraldas para o seu Bebê Reborn sempre ficar limpinho.",
       preco: 79.90,
-      detalhes: "Contém 138 unidades. Conforto seco garantido por até 12h.",
+      detalhes: "Contém 138 unidades. Conforto seco garantido por até 12h."
     },
     {
       imagem: "./images/Produto3.png",
       nome: "Sapatênis",
       descricao: "Sapatênis tamanho 38 para ficar muito no estilo.",
       preco: 90.00,
-      detalhes: "Confeccionado em material sintético de alta qualidade, com palmilha macia e solado antiderrapante para máximo conforto e segurança.",
+      detalhes: "Confeccionado em material sintético de alta qualidade, com palmilha macia e solado antiderrapante para máximo conforto e segurança."
     },
     {
       imagem: "./images/Produto4.jpg",
       nome: "Boné do PT",
       descricao: "Compre este boné do PT para estar sempre apoiando nosso querido presidente.",
       preco: 13.13,
-      detalhes: "Boné ajustável com estampa bordada em destaque, feito em algodão resistente para garantir estilo e durabilidade no apoio ao seu partido.",
+      detalhes: "Boné ajustável com estampa bordada em destaque, feito em algodão resistente para garantir estilo e durabilidade no apoio ao seu partido."
     },
     {
       imagem: "./images/Produto5.jpeg",
       nome: "Tapete da MC Pipokinha",
       descricao: "Esse tapete impede de suas visitas chegarem na sua casa e falar mal da pipokinha.",
       preco: 69.00,
-      detalhes: "Tapete em tecido antiderrapante, com estampa ousada e divertida da MC Pipokinha. Ideal para quem quer recepcionar as visitas com muito estilo (e um toque de polêmica).",
+      detalhes: "Tapete em tecido antiderrapante, com estampa ousada e divertida da MC Pipokinha. Ideal para quem quer recepcionar as visitas com muito estilo (e um toque de polêmica)."
     }
   ];
 
@@ -57,6 +56,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     lista.appendChild(card);
   });
+
+  function formatarCidade(texto) {
+    return texto.toLowerCase().split(' ').map(p => p.charAt(0).toUpperCase() + p.slice(1)).join(' ');
+  }
 
   function abrirPopup(produto) {
     const popup = document.createElement("div");
@@ -89,9 +92,7 @@ document.addEventListener("DOMContentLoaded", () => {
     quantidadeInput.addEventListener("input", atualizarPrecoTotal);
     atualizarPrecoTotal();
 
-    popup.querySelector(".popup-close").addEventListener("click", () => {
-      popup.remove();
-    });
+    popup.querySelector(".popup-close").addEventListener("click", () => popup.remove());
 
     popup.querySelector(".btn-endereco").addEventListener("click", () => {
       const quantidade = parseInt(quantidadeInput.value);
@@ -103,12 +104,6 @@ document.addEventListener("DOMContentLoaded", () => {
       popup.remove();
     });
   }
-
-  // O RESTANTE DO CÓDIGO (abrirFormularioEndereco, abrirPopupEndereco, máscara CEP, UF em maiúsculo, cidade formatada, salvamento localStorage etc.)
-  // PERMANECE IGUAL AO CÓDIGO ANTERIOR COM AS MELHORIAS QUE VOCÊ PEDIU
-
-  // (... você já tem essa parte, por isso não repito aqui para economizar espaço ...)
-});
 
   function abrirFormularioEndereco(produto, quantidade) {
     const popup = document.createElement("div");
@@ -125,7 +120,7 @@ document.addEventListener("DOMContentLoaded", () => {
         <p><strong>Total (Produto):</strong> R$ ${totalProduto}</p>
         <p><strong>Frete:</strong> R$ 10.99</p>
 
-        <button type="button" class="btn-endereco">Endereço de Entrega</button> <br> <br>
+        <button type="button" class="btn-endereco">Endereço de Entrega</button> <br><br>
 
         <h3>Método de Pagamento:</h3>
         <select id="pagamento" required>
@@ -141,14 +136,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     document.body.appendChild(popup);
 
-    const endereco = {
+    let endereco = JSON.parse(localStorage.getItem("enderecoSalvo")) || {
       cep: '', cidade: '', estado: '', bairro: '', rua: '', numero: '', complemento: ''
     };
-
-    const enderecoSalvo = JSON.parse(localStorage.getItem("enderecoSalvo"));
-    if (enderecoSalvo) {
-      Object.assign(endereco, enderecoSalvo);
-    }
 
     popup.querySelector(".popup-close").addEventListener("click", () => popup.remove());
 
@@ -229,24 +219,16 @@ Obrigado pela compra!
     document.body.appendChild(popup);
 
     const cepInput = popup.querySelector('#cep');
-    const cidadeInput = popup.querySelector('#cidade');
     const estadoInput = popup.querySelector('#estado');
+    const cidadeInput = popup.querySelector('#cidade');
     const numeroInput = popup.querySelector('#numero');
 
-    if (endereco.cep) cepInput.value = endereco.cep;
-    if (endereco.cidade) cidadeInput.value = endereco.cidade;
-    if (endereco.estado) estadoInput.value = endereco.estado;
-    if (endereco.bairro) popup.querySelector('#bairro').value = endereco.bairro;
-    if (endereco.rua) popup.querySelector('#rua').value = endereco.rua;
-    if (endereco.numero) numeroInput.value = endereco.numero;
-    if (endereco.complemento) popup.querySelector('#complemento').value = endereco.complemento;
-
     cepInput.addEventListener('input', () => {
-      let valor = cepInput.value.replace(/\D/g, '');
-      if (valor.length > 5) {
-        valor = valor.slice(0, 5) + '-' + valor.slice(5, 8);
+      let cep = cepInput.value.replace(/\D/g, '');
+      if (cep.length > 5) {
+        cep = cep.slice(0, 5) + '-' + cep.slice(5);
       }
-      cepInput.value = valor;
+      cepInput.value = cep;
     });
 
     estadoInput.addEventListener('input', () => {
@@ -254,11 +236,7 @@ Obrigado pela compra!
     });
 
     cidadeInput.addEventListener('blur', () => {
-      cidadeInput.value = cidadeInput.value
-        .toLowerCase()
-        .split(' ')
-        .map(palavra => palavra.charAt(0).toUpperCase() + palavra.slice(1))
-        .join(' ');
+      cidadeInput.value = formatarCidade(cidadeInput.value);
     });
 
     numeroInput.addEventListener('input', () => {
@@ -281,15 +259,8 @@ Obrigado pela compra!
         return;
       }
 
-      endereco.cep = cep;
-      endereco.cidade = cidade;
-      endereco.estado = estado;
-      endereco.bairro = bairro;
-      endereco.rua = rua;
-      endereco.numero = numero;
-      endereco.complemento = complemento;
-
-      localStorage.setItem("enderecoSalvo", JSON.stringify(endereco));
+      const enderecoSalvo = { cep, cidade, estado, bairro, rua, numero, complemento };
+      localStorage.setItem("enderecoSalvo", JSON.stringify(enderecoSalvo));
 
       alert("Endereço salvo com sucesso!");
       popup.remove();
