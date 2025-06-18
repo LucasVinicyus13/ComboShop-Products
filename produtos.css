@@ -441,3 +441,38 @@ h1 {
 .popup-content button:hover {
   background-color: #5e40d6;
 }
+
+/* Inputs e Selects nos popups */
+.popup-content label {
+  font-weight: bold;
+  margin-top: 10px;
+  display: block;
+}
+
+.popup-content input[type="text"],
+.popup-content input[type="number"],
+.popup-content select {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+/* Botão Finalizar Pedido */
+.btn-finalizar-pedido {
+  background-color: #8b5cf6;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 15px;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.btn-finalizar-pedido:hover {
+  background-color: #6b21a8;
+}
